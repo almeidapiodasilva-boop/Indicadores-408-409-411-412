@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reserva de EPI · PR11 — em pausa</title>
+<meta name="theme-color" content="#1A1916">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<style>
+:root{
+  --carvao:#1A1916; --laranja:#E8731A; --creme:#F2F1EF;
+  --pessego:#FBE2CE; --cinza:#8A8884; --linha:#D5D3CE;
+  --calibri:'Calibri','Carlito','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'Consolas','Roboto Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--creme);color:var(--carvao);font-family:var(--calibri);
+  font-size:16px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px;width:100%}
+
+header{background:var(--carvao);color:var(--creme);padding:26px 0 20px}
+.marca{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cinza)}
+header h1{font-size:27px;font-weight:700;margin:6px 0 0;letter-spacing:-.01em}
+.regua{height:5px;background:var(--laranja)}
+
+main{flex:1;padding:26px 0 40px}
+
+.selo{
+  display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;background:var(--carvao);color:var(--laranja);
+  padding:6px 12px;border-radius:2px;margin-bottom:18px
+}
+
+.aviso{
+  background:#fff;border:1px solid var(--linha);border-left:6px solid var(--laranja);
+  padding:20px;border-radius:2px
+}
+.aviso h2{margin:0 0 10px;font-size:20px;line-height:1.3}
+.aviso p{margin:0 0 12px;font-size:15.5px}
+.aviso p:last-child{margin-bottom:0}
+
+.passos{margin:22px 0 0;padding:0;list-style:none}
+.passos li{
+  display:flex;gap:12px;align-items:flex-start;padding:13px 0;
+  border-bottom:1px solid var(--linha);font-size:15px
+}
+.passos li:last-child{border-bottom:0}
+.passos .n{
+  flex:0 0 26px;height:26px;background:var(--carvao);color:var(--creme);
+  font-family:var(--mono);font-size:12px;display:flex;align-items:center;
+  justify-content:center;border-radius:2px;margin-top:1px
+}
+
+h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza);
+   margin:30px 0 4px;font-weight:700}
+.linha-fina{height:1px;background:var(--linha)}
+
+.nota{background:var(--pessego);padding:14px 16px;border-radius:2px;font-size:14px;margin-top:26px}
+
+footer{border-top:1px solid var(--linha);padding:18px 0 26px;font-size:12px;color:var(--cinza)}
+footer span{display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="marca">Marcopolo VV10 · PR11 Estrutural</div>
+    <h1>Reserva de EPI</h1>
+  </div>
+</header>
+<div class="regua"></div>
+
+<main>
+  <div class="wrap">
+
+    <div class="selo">Projeto em pausa</div>
+
+    <div class="aviso">
+      <h2>O pedido de EPI voltou ao procedimento anterior.</h2>
+      <p>Este aplicativo está <strong>fora de uso</strong> por enquanto. Pedidos feitos
+         por aqui não são mais lançados.</p>
+      <p>A ferramenta fica guardada. Se voltarmos a usar, o endereço continua o mesmo.</p>
+    </div>
+
+    <!-- ==== AJUSTE AQUI o que a equipe deve fazer agora ==== -->
+    <h3>Como pedir EPI a partir de agora</h3>
+    <div class="linha-fina"></div>
+    <ul class="passos">
+      <li><span class="n">1</span><span>Procure a liderança do seu setor.</span></li>
+      <li><span class="n">2</span><span>O pedido volta a ser feito como era antes, no formulário de papel.</span></li>
+      <li><span class="n">3</span><span>Em caso de dúvida, fale com o Daniel — PR11 Estrutural.</span></li>
+    </ul>
+    <!-- ===================================================== -->
+
+    <div class="nota">
+      Se o aplicativo estiver instalado na tela inicial do celular, pode apagar o atalho.
+      Nada que você digitou saía do seu aparelho.
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Gestão de Arame · PR11 Estrutural · Marcopolo VV10</span>
+    <span id="quando"></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('quando').textContent =
+  'Aviso publicado em ' + new Date().toLocaleDateString('pt-BR');
+
+// Desliga o app instalado: remove o service worker e limpa o que ficou no aparelho,
+// para ninguém continuar abrindo a versão antiga guardada em cache.
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations()
+    .then(function(rs){ rs.forEach(function(r){ r.unregister(); }); })
+    .catch(function(){});
+}
+if(window.caches && caches.keys){
+  caches.keys()
+    .then(function(ns){ ns.forEach(function(n){ caches.delete(n); }); })
+    .catch(function(){});
+}
+try{
+  localStorage.removeItem('reservaEpiPR11');
+  localStorage.removeItem('reservaEpiPR11:hist');
+  localStorage.removeItem('reservaEpiPR11:instalar');
+}catch(e){}
+</script>
+</body>
+</html>
